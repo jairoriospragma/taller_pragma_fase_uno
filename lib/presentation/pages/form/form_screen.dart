@@ -38,7 +38,7 @@ class _FormScreenState extends ConsumerState<FormScreen> {
       return;
     }
 
-    if (phone.length < _phoneSize) {
+    if (phone.length < _phoneSize || !StringConstants.colCellRegex.hasMatch(phone)) {
       _showDialog(StringConstants.errorTitle, StringConstants.phoneInvalid);
       return;
     }

@@ -20,4 +20,6 @@ class StringConstants {
   static const String notContacts = 'No hay contactos';
   static const String deleteContact = 'Eliminar contacto';
   static const String deleteContactTitle = '¿Desea eliminar el contacto?';
+  static const String numberCopy = 'Número copiado';
+  static RegExp colCellRegex = RegExp(r'^3\d{9}$');
 }
