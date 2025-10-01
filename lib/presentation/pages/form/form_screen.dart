@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taller_pragma_fase_uno/domain/entities/contact.dart';
@@ -211,6 +212,10 @@ class _FormScreenState extends ConsumerState<FormScreen> {
               TextField(
                 maxLength: _phoneSize,
                 controller: _phoneController,
+                keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 decoration: InputDecoration(
                   labelText: StringConstants.userPhoneHint,
                   border: OutlineInputBorder(
@@ -218,7 +223,6 @@ class _FormScreenState extends ConsumerState<FormScreen> {
                         BorderRadius.circular(SizeConstants.spacingSize12),
                   ),
                 ),
-                keyboardType: TextInputType.phone,
               ),
               const SizedBox(height: SizeConstants.spacingSize16),
               ElevatedButton.icon(
