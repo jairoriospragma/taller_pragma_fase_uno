@@ -15,6 +15,9 @@ class StringConstants {
   static const String errorTitle = 'Error';
   static const String successTitle = 'Éxito';
   static const String closeTitle = 'Cerrar';
+  static const String acceptTitle = 'Aceptar';
   static const String selectAvatar = 'Selecciona un avatar';
   static const String notContacts = 'No hay contactos';
+  static const String deleteContact = 'Eliminar contacto';
+  static const String deleteContactTitle = '¿Desea eliminar el contacto?';
 }

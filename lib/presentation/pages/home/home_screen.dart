@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taller_pragma_fase_uno/domain/entities/contact.dart';
 import 'package:taller_pragma_fase_uno/presentation/pages/home/card_information.dart';
 import 'package:taller_pragma_fase_uno/presentation/providers/contacts_provider.dart';
 import 'package:taller_pragma_fase_uno/presentation/route/string_rout_names.dart';
@@ -61,12 +62,7 @@ class HomeScreen extends ConsumerWidget {
                         );
                       },
                       onLongPress: () async {
-                        await ref
-                            .read(contactsProvider.notifier)
-                            .remove(contact);
-                        await ref
-                            .read(contactsProvider.notifier)
-                            .loadContacts();
+                        await showConfirmDialog(context, ref, contact);
                       },
                       child: CardInformation(
                         avatarUrl: contact.avatarUrl,
@@ -78,6 +74,32 @@ class HomeScreen extends ConsumerWidget {
                 );
               },
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> showConfirmDialog(
+      BuildContext context, WidgetRef ref, Contact contact) async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text(StringConstants.deleteContact),
+        content: const Text(StringConstants.deleteContactTitle),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text(StringConstants.closeTitle),
+          ),
+          TextButton(
+            onPressed: () async {
+              await ref.read(contactsProvider.notifier).remove(contact);
+              if (!context.mounted) return;
+              Navigator.of(context).pop();
+              await ref.read(contactsProvider.notifier).loadContacts();
+            },
+            child: const Text(StringConstants.acceptTitle),
           ),
         ],
       ),

@@ -154,81 +154,83 @@ class _FormScreenState extends ConsumerState<FormScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(SizeConstants.spacingSize16),
-        child: Column(
-          children: [
-            InkWell(
-              onTap: () async {
-                final urls = List.generate(
-                  _avatarSizeOptions,
-                  (i) => '${StringConstants.urlIcons}$i',
-                );
-                await showAvatarPickerDialog(
-                  context: context,
-                  avatarUrls: urls,
-                  onAvatarSelected: (selectedUrl) {
-                    setState(() {
-                      _avatarSelected = selectedUrl;
-                    });
-                  },
-                );
-              },
-              child: CircleAvatar(
-                radius: SizeConstants.iconSizeForm,
-                backgroundColor: Colors.grey,
-                child: _avatarSelected.isEmpty
-                    ? const Icon(
-                        Icons.camera_alt,
-                        size: SizeConstants.iconSizeForm,
-                      )
-                    : ClipOval(
-                        child: SvgPicture.network(
-                          _avatarSelected,
-                          fit: BoxFit.cover,
-                          width: SizeConstants.iconSizeForm * 2,
-                          height: SizeConstants.iconSizeForm * 2,
-                          placeholderBuilder: (ctx) => const Center(
-                            child: CircularProgressIndicator(
-                              strokeWidth: SizeConstants.strokeWidth2,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              InkWell(
+                onTap: () async {
+                  final urls = List.generate(
+                    _avatarSizeOptions,
+                    (i) => '${StringConstants.urlIcons}$i',
+                  );
+                  await showAvatarPickerDialog(
+                    context: context,
+                    avatarUrls: urls,
+                    onAvatarSelected: (selectedUrl) {
+                      setState(() {
+                        _avatarSelected = selectedUrl;
+                      });
+                    },
+                  );
+                },
+                child: CircleAvatar(
+                  radius: SizeConstants.iconSizeForm,
+                  backgroundColor: Colors.grey,
+                  child: _avatarSelected.isEmpty
+                      ? const Icon(
+                          Icons.camera_alt,
+                          size: SizeConstants.iconSizeForm,
+                        )
+                      : ClipOval(
+                          child: SvgPicture.network(
+                            _avatarSelected,
+                            fit: BoxFit.cover,
+                            width: SizeConstants.iconSizeForm * 2,
+                            height: SizeConstants.iconSizeForm * 2,
+                            placeholderBuilder: (ctx) => const Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: SizeConstants.strokeWidth2,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-              ),
-            ),
-            const SizedBox(height: SizeConstants.spacingSize16),
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: StringConstants.userNameHint,
-                border: OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.circular(SizeConstants.spacingSize12),
                 ),
               ),
-            ),
-            const SizedBox(height: SizeConstants.spacingSize16),
-            TextField(
-              maxLength: _phoneSize,
-              controller: _phoneController,
-              decoration: InputDecoration(
-                labelText: StringConstants.userPhoneHint,
-                border: OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.circular(SizeConstants.spacingSize12),
+              const SizedBox(height: SizeConstants.spacingSize16),
+              TextField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  labelText: StringConstants.userNameHint,
+                  border: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(SizeConstants.spacingSize12),
+                  ),
                 ),
               ),
-              keyboardType: TextInputType.phone,
-            ),
-            const SizedBox(height: SizeConstants.spacingSize16),
-            ElevatedButton.icon(
-              onPressed: _saveContact,
-              icon: const Icon(Icons.save_outlined),
-              label: const TextWidget(
-                text: StringConstants.addContact,
-                fontSize: SizeConstants.fontSizeCardDescription,
+              const SizedBox(height: SizeConstants.spacingSize16),
+              TextField(
+                maxLength: _phoneSize,
+                controller: _phoneController,
+                decoration: InputDecoration(
+                  labelText: StringConstants.userPhoneHint,
+                  border: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(SizeConstants.spacingSize12),
+                  ),
+                ),
+                keyboardType: TextInputType.phone,
               ),
-            ),
-          ],
+              const SizedBox(height: SizeConstants.spacingSize16),
+              ElevatedButton.icon(
+                onPressed: _saveContact,
+                icon: const Icon(Icons.save_outlined),
+                label: const TextWidget(
+                  text: StringConstants.addContact,
+                  fontSize: SizeConstants.fontSizeCardDescription,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
