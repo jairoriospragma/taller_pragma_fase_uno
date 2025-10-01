@@ -8,6 +8,7 @@ import 'package:taller_pragma_fase_uno/presentation/route/string_rout_names.dart
 import 'package:taller_pragma_fase_uno/presentation/widgets/text_widget.dart';
 import 'package:taller_pragma_fase_uno/utils/size_constants.dart';
 import 'package:taller_pragma_fase_uno/utils/string_constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -54,21 +55,45 @@ class HomeScreen extends ConsumerWidget {
                   itemCount: contacts.length,
                   itemBuilder: (context, index) {
                     final contact = contacts[index];
-                    return InkWell(
-                      onTap: () {
-                        context.push(
-                          StringRoutNames.detailScreen,
-                          extra: contact,
-                        );
-                      },
-                      onLongPress: () async {
-                        await showConfirmDialog(context, ref, contact);
-                      },
-                      child: CardInformation(
-                        avatarUrl: contact.avatarUrl,
-                        userName: contact.userName,
-                        userPhone: contact.userPhone,
-                      ),
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              context.push(
+                                StringRoutNames.detailScreen,
+                                extra: contact,
+                              );
+                            },
+                            onLongPress: () async {
+                              await showConfirmDialog(context, ref, contact);
+                            },
+                            child: CardInformation(
+                              avatarUrl: contact.avatarUrl,
+                              userName: contact.userName,
+                              userPhone: contact.userPhone,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.phone, color: Colors.green),
+                          onPressed: () async {
+                            final Uri url = Uri(
+                                scheme: StringConstants.schemeTel,
+                                path: contact.userPhone);
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            } else {
+                              if (!context.mounted) return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text(StringConstants.cantOpenCallApp)),
+                              );
+                            }
+                          },
+                        ),
+                      ],
                     );
                   },
                 );

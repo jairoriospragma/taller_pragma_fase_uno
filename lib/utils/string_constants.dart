@@ -22,4 +22,7 @@ class StringConstants {
   static const String deleteContactTitle = '¿Desea eliminar el contacto?';
   static const String numberCopy = 'Número copiado';
   static RegExp colCellRegex = RegExp(r'^3\d{9}$');
+  static const String schemeTel = 'tel';
+  static const String cantOpenCallApp = 'No se pudo abrir la app de llamadas';
+
 }
