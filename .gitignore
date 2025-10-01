@@ -1,3 +1,5 @@
+# Ignorar configuración local de Gradle
+android/gradle.properties
 # Miscellaneous
 *.class
 *.log
